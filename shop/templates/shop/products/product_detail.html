@@ -1,0 +1,171 @@
+{%extends 'shop/layout/main.html'%}
+<!-- Its an Main Content of Inherting the Parent File -->
+<!-- Endblock Title  -->
+{%block title%} 
+K-cart || Product_details📜 
+{%endblock title%} 
+ {%block content%}
+ {%load static%}
+<section class="bg-light py-2 my-1 " style="min-height: 600px;">
+  <div class="container">
+    <div class="row">  <!-- col-md-12 -->
+      <div class="col-12">
+        <h4 class="mb-3">{{product}} Details</h4>
+        <hr style="border-color: #3f6ce9" />
+      </div>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'collections' product.fname %}">Collection</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{{product}}</li>
+        </ol>
+      </nav>
+      {%include 'shop/inc/message.html'%}
+      <!-- return render(request,'shop/products/product_detail.html',{"product":products})==>This product name will be rendering -->
+      <!-- {{product}} -->
+      <div class="col-4 my-3 pic-box">
+        {% if product.trending %}
+        <div class="hot">Trendy💥</div>
+        {% endif %}
+        <img src="{{product.product_image.url}}" class="card-image-top" alt="{{product}}" height="80%" width="80%">
+        <!-- <hr> -->
+      </div>
+      <div class="col-8 my-5">
+        <h5 class="text-success">{{product | upper}}</h5>
+        <p>Seller Name : {{product.vendor}}</p>
+        <p>Description : {{product.desc}}</p>
+          <h6 class="my-2 text-danger">Current Price  : Rs.<s>{{product.original_price}}</s></h6>
+          <h5 class="my-2 text-primary">Offer price    : Rs.{{product.selling_price}}</h5>
+          <div class="my-3">
+            {% if product.quantity  >  0  %}
+            <!-- {% csrf_token %} //If u givng any request from post method then csrf token must be wanted then only we can do futher things -->
+            <!-- Ex in webrowser===> 
+               <input type="hidden" name="csrfmiddlewaretoken" value="P6G6KshsAZME5wIxzcl8fRvJtrvNGfRYRCGQSytQljWUhpC9SdPXEsNzM9T298ax"> -->
+            <input type="hidden" value="{{ product.id }}" id="pid">  <!-- it an input that is used to capture the csrf token key from the browser -->
+          
+            <p>
+              <div class="input-group" style="width: 150px;">
+                <button class="input-group-text bg-success text-light" id="btnMinus"><i class="fa fa-minus"></i></button>
+                  <input type="text" name="qty" id="txtQty" value="1" class="form-control text-center">
+                <button class="input-group-text bg-success text-light" id="btnPlus"><i class="fa fa-plus"></i></button>
+              </div>
+            </p>
+            <button class="btn btn-primary" id="btnCart"><i class="fa fa-shopping-cart"></i>Add to Cart</button>
+            <button class="btn btn-danger " id="btnFav"><i class="fa fa-heart"></i></button>
+            {% else %}
+            <button class="btn btn-warning"><i class="fa fa-exclamation-triangle"></i> Out-Of-Stock</button>
+            <button class="btn btn-danger"><i class="fa fa-times-circle"></i></button>
+            {% endif %}
+          </div>
+          <!-- <hr> -->
+        </div>
+        <!-- <hr> -->
+      </div>
+  </div>
+</section>
+<!-- block is keyword and the content userdefined word-->
+<!-- <h1>Balu Product Page is Running</h1> -->
+<!-- endblock is an keyword and the content is userdefined word -->
+<script>
+   document.addEventListener("DOMContentLoaded",function(event){//getting an help of addEventListener for any events occor like click,then "DOMContentLoaded" is used for if we given a input then it automatically reload that pages and increse or decrease the conetent
+        const btnPlus=document.getElementById("btnPlus");
+        const btnMinus=document.getElementById("btnMinus");
+        const txtQty=document.getElementById("txtQty");
+        const pid=document.getElementById("pid");
+        const btnFav=document.getElementById("btnFav");
+        // const tkn=document.querySelector('[name="csrfmiddlewaretoken"]').value; //Using query selector command getting the name attribute as an "csrfmiddlewaretoken" then take that value and save it to the tkn variable
+        const btncart=document.getElementById("btnCart");
+
+        btnPlus.addEventListener("click",function(event){
+          // alert('+')
+          let qty=parseInt(txtQty.value,10); //Converting the given input into the int,then =>10 in the sense decimal 10
+          qty=isNaN(qty)?0:qty; //if in textbox not given the value the it will assign 0 as default using ternary operator
+          // console.log("The quantity is:"+qty);//for check
+          if(qty<10){//it is mainly used for quantity that could not exceed the 10 nos 
+            qty++;  //if it less than zero menas it will be increment the quantity
+            txtQty.value=qty;//then it assign to the txtQty
+          }//its an routine process
+        });
+
+
+        
+        btnMinus.addEventListener("click",function(){
+          // alert('-')
+          let qty=parseInt(txtQty.value,10); //Converting the given input into the int,then =>10 in the sense decimal 10
+          qty=isNaN(qty)?0:qty; //if in textbox not given the value the it will assign 0 as default using ternary operator
+          // console.log("The quantity is:"+qty);//for check
+          if(qty>1){//it is mainly used for quantity that should maintain an atleast 1 
+            qty--;  //if it less than zero menas it will be decrement the quantity
+            txtQty.value=qty;//then it assign to the txtQty
+          }//its an routine process
+        });
+         
+      
+        btnCart.addEventListener("click",function(){
+          // alert('-')
+          let qty=parseInt(txtQty.value,10); //Converting the given input into the int,then =>10 in the sense decimal 10
+          qty=isNaN(qty)?0:qty; //if in textbox not given the value the it will assign 0 as default using ternary operator
+          if(qty>0){//it checking that quantity greater than zero!
+            let postObj={ //creating an object name as postobject
+              product_qty:qty, //qty=isNaN(qty)?0:qty; storing this quantity in the product_qty
+              pid:pid.value,  //getting product id value and storing in the pid
+              // token:tkn    // similarly collecting the tkn and assigned to the token
+            }
+            console.log(postObj);//for check
+              fetch("/addtocart",{
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                  'Accept':'application/json',
+                  'X-Requested-With':'XMLHttpRequest',
+                  'X-CSRFToken':'{{csrf_token}}',
+                },
+                  body:JSON.stringify(postObj)
+              })
+              .then(response=>{
+                return response.json();
+              })
+              .then(data=>{
+                console.log(data);
+                alert(data['status']) 
+              });
+          }
+          else{
+            alert("Please Enter the Quantity!!")
+          }//its an routine process
+        });
+
+
+        btnFav.addEventListener("click",function(){
+          // alert('-')
+           
+            let postObj={ //creating an object name as postobject
+              pid:pid.value,  //getting product id value and storing in the pid
+              // token:tkn    // similarly collecting the tkn and assigned to the token
+            }
+            console.log(postObj);//for check
+              fetch("/fav",{
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                  'Accept':'application/json',
+                  'X-Requested-With':'XMLHttpRequest',
+                  'X-CSRFToken':'{{csrf_token}}',
+                },
+                  body:JSON.stringify(postObj)
+              })
+              .then(response=>{
+                return response.json();
+              })
+              .then(data=>{
+                console.log(data);
+                alert(data['status']) 
+              });
+          }
+        );
+
+
+      });
+
+</script>
+{%endblock content%}

@@ -1,0 +1,49 @@
+{%extends 'shop/layout/main.html'%}
+<!-- Its an Main Content of Inherting the Parent File -->
+{%block title%}
+K-cart || Favourite
+{%endblock title%}
+
+
+{%block content%}
+<!-- endblock is an keyword and the content is userdefined word -->
+</section>
+<section class="bg-light py-4 my-9">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h4 class="mb-3">Cart</h4>
+        <hr style="border-color: #044c6b;">
+        {%include 'shop/inc/message.html'%}
+      </div>
+      <table class="table table-bordered">
+        <tr>
+            <th>Image</th>
+            <th>Product Name</th>
+            <th>Cost</th>
+            <th>Remove</th>
+        </tr>
+        {% for items in fav %}
+            <tr>
+                <td> <img src="{{items.product.product_image.url}}" height="75px" alt="{{items.product.fname}}"></td>
+                <td>{{items.product.fname}}</td>
+                <td>{{items.product.selling_price | stringformat:'d'}}</td>
+                <td><a href="{% url 'remove_fav' items.id %}" onclick="return confirm('Are you Sure? to Remove!!')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>  Remove</a></td>
+            </tr>
+            {% endfor %}
+        
+      </table>
+    </div>
+  </div>
+</section>
+
+
+{%endblock content%}
+
+<!-- <div class="container" style="margin-top: 5%;"> -->
+    <!-- <div class="row">
+      <div class="col-12">
+        {{category}}
+        <h1>Collection page also running da Balu</h1>
+      </div>
+    </div> -->

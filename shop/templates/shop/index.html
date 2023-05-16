@@ -1,0 +1,39 @@
+{%extends 'shop/layout/main.html'%}
+<!-- Its an Main Content of Inherting the Parent File -->
+<!-- Endblock Title  -->
+{%block title%} 
+K-cart || Shopping🚀🌏
+{%endblock title%}
+ {%block content%}
+ {%include 'shop/inc/message.html'%}
+ {%include 'shop/inc/slider.html'%}
+<!-- block is keyword and the content userdefined word-->
+<div class="container" style="margin-top: 2%;">
+  <div class="row"> 
+    <div class="col-12">
+      <h1> 
+        <h4 class="mb-3">Latest Offers</h4>
+        <hr style="border-color: #3f6ce9" />
+      </h1></div>
+      {% for items in product %}
+      <div class="col-md-4 col-lg-3">
+        <div class="card my-3">
+          <img src="{{items.product_image.url}}"class="card-image-top"alt="Products"/>
+          <a href="{% url 'product_details' items.catagory.fname items.fname %}">
+            <!-- Its an class name of catagory -->
+            <!--url 'product_details' category_name items.fname -->
+            <div class="cart-body">
+              <h5 class="card-title text-primary">&nbsp;&nbsp;&nbsp;&nbsp;{{items.fname}}</h5>
+              <p class="card-text">
+                  <span class="float-start old-price"><s>Rs.{{items.original_price | stringformat:'d'}}</s></span>
+                  <span class="float-end new-price">Rs.{{items.selling_price | stringformat:'d'}}</span>
+              </p>
+            </div>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+  </div>
+</div>
+<!-- endblock is an keyword and the content is userdefined word -->
+{%endblock content%}

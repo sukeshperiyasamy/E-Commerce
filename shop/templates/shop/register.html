@@ -1,0 +1,80 @@
+{%extends 'shop/layout/main.html'%}
+<!-- Its an Main Content of Inherting the Parent File -->
+{%block title%}
+K-cart || Register
+{%endblock title%}
+
+
+{%block content%}
+<!-- block is keyword and the content userdefined word-->
+<div class="container" style="margin-top: 5%; min-height: 600px;">
+    <div class="row">
+      <div class="col-12">
+        <center>
+        <h4 class="mb-3">Registration page</h4></center>
+        <hr style="border-color:rgb(21, 21, 190);">
+        <!-- {{form.username}} -->
+        {%include 'shop/inc/message.html'%}
+      </div>
+    </div>
+    <section class="py-4  my-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-6">
+            <form action="" method="post">
+              {%csrf_token%}
+              <div class="mb-4">
+                <label for="username" class="form-label">UserName</label>
+                {{form.username}}
+              </div>
+              <div class="mb-4">
+                <label for="email" class="form-label">E-mail</label>
+                {{form.email}}
+              </div>
+              <div class="mb-4">
+                <label for="mob" class="form-label">Phn-Number</label>
+                {{form.mob}}
+               
+              </div>
+              <div class="mb-4">
+                <label for="password1" class="form-label">Password</label>
+                {{form.password1}}
+            
+              </div>
+              <div class="mb-4">
+                <label for="password2" class="form-label">Re-type Password</label>
+                {{form.password2}}
+                
+              </div>
+              <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+            <p class="my-2">Already User? <a href="{%url 'login'%}">Login Now</a></p>
+          </div>
+          <div class="col-6">
+                {% if form.errors.username %}
+                <label class="text-danger">{{ form.errors.username }}</label>
+                {% endif %}
+             
+                {% if form.errors.email %}
+                <label class="text-danger">{{ form.errors.email }}</label>
+                {% endif %}
+             
+                {% if form.errors.mob %}
+                <label class="text-danger">{{ form.errors.mob }}</label>
+                {% endif %}
+             
+                {% if form.errors.password1 %}
+                <label class="text-danger">{{ form.errors.password1 }}</label>
+                {% endif %}
+
+                {% if form.errors.password2 %}
+                <label class="text-danger">{{ form.errors.password2 }}</label>
+                {% endif %}
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+<!-- endblock is an keyword and the content is userdefined word -->
+{%endblock content%}

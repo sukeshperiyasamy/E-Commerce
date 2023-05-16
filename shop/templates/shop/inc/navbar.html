@@ -1,0 +1,47 @@
+<!-- It will act as an parent and git give an header to the project -->
+<nav class="navbar bg-primary" data-bs-theme="dark">
+    <div class="container-fluid ">
+      <a class="navbar-brand" href="{%url 'home'%}"><i class="fa fa-cart-plus"></i>    K-Cart</a> 
+      {% if request.user.is_authenticated %}
+        <h5 class="usr_name">{{request.user}}</h5>
+      {% endif %}
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{%url 'home'%}"><i class="fa fa-home"></i>  Home</a>
+          </li>
+          {% if request.user.is_authenticated %}
+          <li class="nav-link ">
+            <a class="nav-link active" href="#"><i class="fa fa-user"></i> {{request.user}}</a>
+          </li>
+          <li class="nav-link ">
+            <a class="nav-link active" href="{%url 'logout' %}"><i class="fa fa-sign-out"></i>  Logout</a>
+          </li>
+          <li class="nav-link ">
+            {% else %}
+            <a class="nav-link active" href="{%url 'reg' %}"><i class="fa fa-user"></i>  Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="{%url 'login'%}"><i class="fa fa-rocket"></i>  Login</a>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link active" href="{%url 'collect' %}"><i class="fa  fa-diamond"></i>  Collection</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="{%url 'cart' %}"><i class="fa fa-cart-arrow-down"></i>  Cart</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="{%url 'fav_viewpage' %}"><i class="fa fa-heart"></i>  Favourite</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>

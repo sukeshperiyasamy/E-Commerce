@@ -1,0 +1,29 @@
+{%extends 'shop/layout/main.html'%}
+<!-- Its an Main Content of Inherting the Parent File -->
+<!-- Endblock Title  -->
+{%block title%} 
+K-cart || Thanks 
+{%endblock title%} 
+ {%block content%}
+ {%load static%}
+ <div class=content>
+    <div class="wrapper-1">
+      <div class="wrapper-2">
+        <h1>Thank you !</h1>
+        <p>Thanks for subscribing to our news letter.  </p>
+        <p>you should receive a confirmation email soon  </p>
+        <a href=""></a>
+        <button class="go-home"><a href="{% url 'home'%}">
+        go home
+        </button></a>
+      </div>
+      <div class="footer-like">
+        <p>Email not received?
+         <a href="{% url 'home'%}">Click here to send again</a>
+        </p>
+      </div>
+  </div>
+  </div>
+
+  <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Source+Sans+Pro" rel="stylesheet">
+{%endblock content%}

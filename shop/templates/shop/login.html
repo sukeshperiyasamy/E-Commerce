@@ -1,0 +1,43 @@
+{%extends 'shop/layout/main.html'%}
+<!-- Its an Main Content of Inherting the Parent File -->
+{%block title%}
+K-cart || Login
+{%endblock title%}
+
+
+{%block content%}
+<!-- block is keyword and the content userdefined word-->
+<div class="container" style="margin-top: 5%; min-height: 600px;">
+    <div class="row">
+      <div class="col-12">
+        <center>
+        <h4 class="mb-3">Login page</h4></center>
+        <hr style="border-color:rgb(21, 21, 190);">
+        {%include 'shop/inc/message.html'%}
+        <!-- {{form.username}} -->
+      </div>
+    </div>
+    <section class="py-4  my-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-6">
+            <form action="" method="post">
+              {%csrf_token%}
+              <div class="mb-4">
+                <label for="username"class="form-label">UserName</label>
+                <input type="text" name="username" id="username" class="form-control" placeholder="Enter your Username">
+              </div>
+              <div class="mb-4">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" id="password" class="form-control" placeholder="Enter your Password">
+                </div>
+              <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <p class="my-2">New User? <a href="{%url 'reg' %}">Register Now</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+<!-- endblock is an keyword and the content is userdefined word -->
+{%endblock content%}

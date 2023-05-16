@@ -1,0 +1,48 @@
+{%extends 'shop/layout/main.html'%}
+<!-- Its an Main Content of Inherting the Parent File -->
+<!-- Endblock Title  -->
+{%block title%} 
+K-cart || Products📜 
+{%endblock title%}
+ {%block content%}
+ {%load static%}
+<section class="bg-light py-2 my-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h4 class="mb-3">{{category_name}} Products</h4>
+        <hr style="border-color: #3f6ce9" />
+      </div>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Collection</li>
+        </ol> 
+      </nav>
+      <!--  if(Catagory.objects.filter(fname=fname,status=0)):
+        product=Products.objects.filter(catagory__fname=fname)
+        return render(request,'shop/products/index.html',{"product":product}) -->
+        <!-- We iterating this products in the products page not in classes -->
+      {% for items in product %}
+      <div class="col-md-4 col-lg-3">
+        <div class="card my-3">
+          <img src="{{items.product_image.url}}"class="card-image-top"alt="Products"/>
+          <a href="{% url 'product_details' category_name items.fname%}">
+            <div class="cart-body">
+              <h5 class="card-title text-primary">{{items.fname}}</h5>
+              <p class="card-text">
+                  <span class="float-start old-price"><s>Rs.{{items.original_price | stringformat:'d'}}</s></span>
+                  <span class="float-end new-price">Rs.{{items.selling_price | stringformat:'d'}}</span>
+              </p>
+            </div>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<!-- block is keyword and the content userdefined word-->
+<!-- <h1>Balu Product Page is Running</h1> -->
+<!-- endblock is an keyword and the content is userdefined word -->
+{%endblock content%}

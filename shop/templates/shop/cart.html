@@ -1,0 +1,68 @@
+{%extends 'shop/layout/main.html'%}
+<!-- Its an Main Content of Inherting the Parent File -->
+{%block title%}
+K-cart || Cart
+{%endblock title%}
+
+
+{%block content%}
+<!-- endblock is an keyword and the content is userdefined word -->
+</section>
+<section class="bg-light py-4 my-9">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h4 class="mb-3">Cart</h4>
+        <hr style="border-color: #044c6b;">
+        {%include 'shop/inc/message.html'%}
+      </div>
+      <table class="table table-bordered">
+        <tr>
+            <th>Image</th>
+            <th>Product Name</th>
+            <th>Unit</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+            <th>Remove</th>
+        </tr>
+        {% for items in cart %}
+            <tr>
+                <td> <img src="{{items.product.product_image.url}}" height="75px" alt="{{items.product.fname}}"></td>
+                <td>{{items.product.fname}}</td>
+                <td>{{items.product.selling_price | stringformat:'d'}}</td>
+                <td>{{items.product_qty}}</td>
+                <td class="amt">{{items.total_cost}}</td>
+                <td><a href="{% url 'remove_cart' items.id %}" onclick="return confirm('Are you Sure? to Remove!!')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>  Remove</a></td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td colspan="2"><b>Total Amount :</b></td>
+                <td id="net">0 </td>
+                <td ><button class="btn btn-warning btn-sm"><i class="fa fa-rocket"></i><a href="{% url 'thanks'%}"> Checkout</a></button></td>
+            </tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<script>
+    const nodes= document.querySelectorAll('.amt');
+    const arr=Array.from(nodes);
+    const res=arr.reduce((acc,curr)=>{
+            return  acc+=Number(curr.textContent)
+    },0);
+    document.getElementById("net").innerHTML="Rs : "+res;
+</script>
+
+
+{%endblock content%}
+
+<!-- <div class="container" style="margin-top: 5%;"> -->
+    <!-- <div class="row">
+      <div class="col-12">
+        {{category}}
+        <h1>Collection page also running da Balu</h1>
+      </div>
+    </div> -->

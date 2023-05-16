@@ -1,0 +1,56 @@
+{%extends 'shop/layout/main.html'%}
+<!-- Its an Main Content of Inherting the Parent File -->
+{%block title%}
+K-cart || Collection🎨
+{%endblock title%}
+
+
+{%block content%}
+<!-- block is keyword and the content userdefined word-->
+<section class="py-2 text-center container" style="margin-top:70px;">
+  <div class="row py-lg-5">
+    <div class="col-lg-6 col-md-8 mx-auto">
+      <h1 class="fw-light">BestSellers</h1>
+        <p class="lead text-muted">Our Most popular products based on sales. Updated hourly!!</p>
+        <p>
+          <a href="#" class="btn btn-primary my-2"><i class="fa fa-user-circle-o"></i> Already User</a>
+          <a href="#" class="btn btn-success my-2"><i class="fa fa-user-plus"></i>  Register</a>
+        </p>
+     </div>
+    </div>
+  </div>
+<!-- endblock is an keyword and the content is userdefined word -->
+</section>
+<section class="bg-light py-4 my-9">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h4 class="mb-3">Category</h4>
+        <hr style="border-color: #044c6b;">
+        {%include 'shop/inc/message.html'%}
+      </div>
+      {% for items in category %}
+      <div class="col-md-4 col-lg-3">
+        <div class="card my-3">
+          <img src="{{items.image.url}}" class="card-image-top" alt="Category">
+          <a href="{% url 'collections' items.fname %}">
+          <div class="cart-body">
+            <h5 class="card-title text-primary">{{items.fname}}</h5>
+            <p class="card-text text-warning">{{items.desc}}</p>
+          </div>
+        </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{%endblock content%}
+
+<!-- <div class="container" style="margin-top: 5%;"> -->
+    <!-- <div class="row">
+      <div class="col-12">
+        {{category}}
+        <h1>Collection page also running da Balu</h1>
+      </div>
+    </div> -->
